@@ -1,4 +1,8 @@
-<button class="button-{{ color }}">
+<button
+  (click)="click()"
+  class="button-{{ color }}"
+  [ngClass]="{ 'button-disabled': disabled }"
+>
   {{ label }}
   <img src="assets/imgs/{{ icon }}" />
 </button>

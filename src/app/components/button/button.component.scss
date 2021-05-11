@@ -28,9 +28,15 @@ button {
     @include bgWithBorder(#20bb1b);
   }
 
-  &:hover {
-    opacity: 0.8;
-    transition: 0.2ms ease-in-out;
+  &:not(.button-disabled) {
+    &:hover {
+      opacity: 0.8;
+      transition: 0.2ms ease-in-out;
+    }
+  }
+
+  &.button-disabled {
+    cursor: default;
   }
 
   img {
