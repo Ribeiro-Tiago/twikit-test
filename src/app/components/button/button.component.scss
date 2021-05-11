@@ -1,0 +1,40 @@
+@import "../../scss/mixins.scss";
+
+button {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 6px;
+  min-width: 120px;
+  min-height: 32px;
+  padding-left: 4px;
+  padding-right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-transform: uppercase;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2ms ease-in-out;
+
+  &.button-default {
+    @include bgWithBorder(#666);
+  }
+
+  &.button-danger {
+    @include bgWithBorder(#c52929);
+  }
+
+  &.button-success {
+    @include bgWithBorder(#20bb1b);
+  }
+
+  &:hover {
+    opacity: 0.8;
+    transition: 0.2ms ease-in-out;
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
