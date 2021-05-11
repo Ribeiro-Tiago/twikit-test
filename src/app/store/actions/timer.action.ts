@@ -1,8 +1,5 @@
-import { createAction, props } from '@ngrx/store';
+import { createAction } from '@ngrx/store';
 
-import { Timer } from 'src/app/typings';
+export const startTimer = createAction('[Timer] Start timer');
 
-export const startTimer = createAction(
-  '[Timer] Start timer',
-  props<{ timer: Timer }>()
-);
+export const stopTimer = createAction('[Timer] End timer');
