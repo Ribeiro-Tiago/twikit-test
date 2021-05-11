@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { OnGoingTimer, TimerState } from 'src/app/typings';
 
 import { TimerStore } from 'src/app/typings/store';
-import { startTimer, stopTimer } from '../actions/timer.action';
+import { startTimer, stopTimer, resetTimers } from '../actions/timer.action';
 
 export const initialState: Readonly<TimerStore> = {
   timers: [],
@@ -15,6 +15,7 @@ export const timerReducer = createReducer(
     ...state,
     currentTimer: { state: TimerState.ON_GOING, startAt: new Date() },
   })),
+
   on(stopTimer, ({ timers, currentTimer }) => {
     return {
       timers: timers.concat({
@@ -24,5 +25,7 @@ export const timerReducer = createReducer(
       }),
       currentTimer: null,
     };
-  })
+  }),
+
+  on(resetTimers, () => ({ timers: [], currentTimer: null }))
 );

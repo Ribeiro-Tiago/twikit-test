@@ -7,6 +7,11 @@
   <div *ngIf="((timers$ | async) || []).length" class="button-wrapper">
     <app-button label="Sort" icon="order.svg" color="default"></app-button>
 
-    <app-button label="Refresh" icon="refresh.svg" color="default"></app-button>
+    <app-button
+      label="Refresh"
+      icon="refresh.svg"
+      color="default"
+      (onClick)="onRefresh()"
+    ></app-button>
   </div>
 </section>
