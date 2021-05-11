@@ -1,9 +1,13 @@
-import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { createSelector } from '@ngrx/store';
 
-import { Timer } from 'src/app/typings';
-import { AppState } from 'src/app/typings/store';
+import { AppState, TimerStore } from 'src/app/typings/store';
 
 export const isTimerActive = createSelector(
-  (state: any) => state.timer.currentTimer,
-  (timer: Timer) => !!timer
+  (state: AppState) => state.timer,
+  (timer: TimerStore) => timer.currentTimer
+);
+
+export const timers = createSelector(
+  (state: AppState) => state.timer,
+  (timer: TimerStore) => timer.timers
 );

@@ -1,10 +1,9 @@
-import { state } from '@angular/animations';
-import { createReducer, on, Action } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 
-import { TimerState } from 'src/app/typings/store';
+import { TimerStore } from 'src/app/typings/store';
 import { startTimer } from '../actions/timer.action';
 
-export const initialState: Readonly<TimerState> = {
+export const initialState: Readonly<TimerStore> = {
   timers: [],
   currentTimer: null,
 };
