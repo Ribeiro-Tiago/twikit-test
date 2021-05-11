@@ -1,10 +1,10 @@
 import { Timer, Nullable } from '.';
 
-export interface TimerState {
+export interface TimerStore {
   timers: Timer[];
   currentTimer: Nullable<Timer>;
 }
 
 export interface AppState {
-  timer: TimerState;
+  timer: TimerStore;
 }
