@@ -1,7 +1,8 @@
 <ul>
   <li>
-    <app-timer></app-timer>
+    <app-timer [timer]="currentTimer$ | async"></app-timer>
   </li>
+
   <li *ngFor="let timer of timers$ | async">
     <app-timer [timer]="timer"></app-timer>
   </li>

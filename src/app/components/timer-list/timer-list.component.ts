@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Timer } from 'src/app/typings';
+import { Nullable, OnGoingTimer, Timer } from 'src/app/typings';
 import { AppState } from 'src/app/typings/store';
-import { timers } from 'src/app/store/selectors/timer.selector';
+import { currentTimer, timers } from 'src/app/store/selectors/timer.selector';
 
 @Component({
   selector: 'app-timer-list',
@@ -12,9 +12,11 @@ import { timers } from 'src/app/store/selectors/timer.selector';
 })
 export class TimerListComponent implements OnInit {
   timers$: Observable<Timer[]>;
+  currentTimer$: Observable<Nullable<OnGoingTimer | Timer>>;
 
   constructor(private store: Store<AppState>) {
     this.timers$ = this.store.pipe(select(timers));
+    this.currentTimer$ = this.store.pipe(select(currentTimer));
   }
 
   ngOnInit(): void {}
