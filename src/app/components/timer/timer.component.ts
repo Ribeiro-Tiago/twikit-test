@@ -1,22 +1,44 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
 
-import { OnGoingTimer, Timer, TimerState } from 'src/app/typings';
+import { Nullable, OnGoingTimer, Timer, TimerState } from 'src/app/typings';
+import { AppState } from 'src/app/typings/store';
+import { startTimer, stopTimer } from 'src/app/store/actions/timer.action';
 
 @Component({
   selector: 'app-timer',
   templateUrl: './timer.component.html',
   styleUrls: ['./timer.component.scss'],
 })
-export class TimerComponent implements OnInit {
-  // ! because https://tutorial.tips/3-ways-to-fix-property-has-no-initializer-and-is-not-definitely-assigned-in-the-constructorts/
-  @Input() timer!: Timer | OnGoingTimer;
+export class TimerComponent implements OnChanges, OnDestroy {
+  @Input() timer: Nullable<Timer | OnGoingTimer> = null;
 
-  label: string;
-  color: string;
-  icon: string;
-  time: number;
+  label: string = '';
+  color: string = '';
+  icon: string = '';
+  time: number = 0;
+  isDone: boolean = false;
 
-  constructor() {
+  timerInterval: any = null;
+
+  constructor(private store: Store<AppState>) {
+    this.setupButton();
+  }
+
+  onButtonClick() {
+    if (!this.timer) {
+      return this.store.dispatch(startTimer());
+    }
+
+    if (this.timer.state === TimerState.ON_GOING) {
+      clearInterval(this.timerInterval);
+      this.store.dispatch(stopTimer());
+    }
+  }
+
+  setupButton() {
+    this.isDone = false;
+
     if (!this.timer) {
       this.label = 'Start';
       this.color = 'success';
@@ -29,6 +51,7 @@ export class TimerComponent implements OnInit {
       this.label = 'Done';
       this.color = 'default';
       this.icon = 'check.svg';
+      this.isDone = true;
       this.time =
         (this.timer as Timer).endAt.getTime() - this.timer.startAt.getTime();
       return;
@@ -38,7 +61,17 @@ export class TimerComponent implements OnInit {
     this.color = 'danger';
     this.icon = 'stop.svg';
     this.time = Date.now() - this.timer.startAt.getTime();
+
+    this.timerInterval = setInterval(() => {
+      this.time = Date.now() - (this.timer as OnGoingTimer).startAt.getTime();
+    }, 1000);
   }
 
-  ngOnInit(): void {}
+  ngOnChanges() {
+    this.setupButton();
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.timerInterval);
+  }
 }

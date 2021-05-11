@@ -1,5 +1,11 @@
 <div>
-  <app-button [label]="label" [color]="color" [icon]="icon"></app-button>
+  <app-button
+    [label]="label"
+    [color]="color"
+    [icon]="icon"
+    [disabled]="isDone"
+    (onClick)="onButtonClick()"
+  ></app-button>
 
   {{ time | time }}
 </div>
