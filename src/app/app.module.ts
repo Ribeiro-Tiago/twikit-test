@@ -9,9 +9,18 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { timerReducer } from './store/reducers/timer.reducer';
 import { environment } from 'src/environments/environment';
 import { TimerComponent } from './components/timer/timer.component';
+import { TimerListComponent } from './components/timer-list/timer-list.component';
+import { TimePipe } from './pipes/time/time.pipe';
 
 @NgModule({
-  declarations: [AppComponent, ButtonComponent, ToolbarComponent],
+  declarations: [
+    AppComponent,
+    ButtonComponent,
+    ToolbarComponent,
+    TimerComponent,
+    TimerListComponent,
+    TimePipe,
+  ],
   imports: [
     BrowserModule,
     StoreModule.forRoot({ timer: timerReducer }),
