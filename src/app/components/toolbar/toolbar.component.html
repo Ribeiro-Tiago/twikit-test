@@ -1,4 +1,12 @@
 <section>
-  <img src="assets/imgs/thumbnail.png" alt="Logo" />
-  <h1>Twikit Time-it</h1>
+  <header>
+    <img src="assets/imgs/thumbnail.png" alt="Logo" />
+    <h1>Twikit Time-it</h1>
+  </header>
+
+  <div *ngIf="isTimerActive$ | async" class="button-wrapper">
+    <app-button label="Sort" icon="order.svg" color="default"></app-button>
+
+    <app-button label="Refresh" icon="refresh.svg" color="default"></app-button>
+  </div>
 </section>
