@@ -8,6 +8,7 @@ import { ButtonComponent } from './components/button/button.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { timerReducer } from './store/reducers/timer.reducer';
 import { environment } from 'src/environments/environment';
+import { TimerComponent } from './components/timer/timer.component';
 
 @NgModule({
   declarations: [AppComponent, ButtonComponent, ToolbarComponent],
