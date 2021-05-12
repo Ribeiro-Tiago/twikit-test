@@ -6,7 +6,7 @@
 - serve app > `yarn start`
 - open browser and go to https://localhost:4200
 
-## How to run in docker (prod mode)
+## How to run in docker (prod-ish mode)
 
 Needs some improvements
 
