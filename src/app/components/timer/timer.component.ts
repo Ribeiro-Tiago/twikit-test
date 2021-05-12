@@ -5,6 +5,33 @@ import { Nullable, OnGoingTimer, Timer, TimerState } from 'src/app/typings';
 import { AppState } from 'src/app/typings/store';
 import { startTimer, stopTimer } from 'src/app/store/actions/timer.action';
 
+const BUTTON_CONFIGURATIONS = {
+  start: {
+    label: 'Start',
+    color: 'success',
+    icon: 'play.svg',
+    isDone: false,
+  },
+  onGoing: {
+    label: 'Stop',
+    color: 'danger',
+    icon: 'stop.svg',
+    isDone: false,
+  },
+  done: {
+    label: 'Done',
+    color: 'default',
+    icon: 'check.svg',
+    isDone: true,
+  },
+  init: {
+    label: '',
+    color: '',
+    icon: '',
+    isDone: false,
+  },
+};
+
 @Component({
   selector: 'app-timer',
   templateUrl: './timer.component.html',
@@ -13,12 +40,8 @@ import { startTimer, stopTimer } from 'src/app/store/actions/timer.action';
 export class TimerComponent implements OnChanges, OnDestroy {
   @Input() timer: Nullable<Timer | OnGoingTimer> = null;
 
-  label: string = '';
-  color: string = '';
-  icon: string = '';
+  buttonConfig = BUTTON_CONFIGURATIONS.init;
   time: number = 0;
-  isDone: boolean = false;
-
   timerInterval: any = null;
 
   constructor(private store: Store<AppState>) {
@@ -37,34 +60,25 @@ export class TimerComponent implements OnChanges, OnDestroy {
   }
 
   setupButton() {
-    this.isDone = false;
-
     if (!this.timer) {
-      this.label = 'Start';
-      this.color = 'success';
-      this.icon = 'play.svg';
+      this.buttonConfig = BUTTON_CONFIGURATIONS.start;
       this.time = 0;
       return;
     }
 
     if (this.timer.state === TimerState.DONE) {
-      this.label = 'Done';
-      this.color = 'default';
-      this.icon = 'check.svg';
-      this.isDone = true;
-      this.time =
-        (this.timer as Timer).endAt.getTime() - this.timer.startAt.getTime();
+      this.buttonConfig = BUTTON_CONFIGURATIONS.done;
+      this.time = this.getTimeLapsed();
       return;
     }
 
-    this.label = 'Stop';
-    this.color = 'danger';
-    this.icon = 'stop.svg';
-    this.time = Date.now() - this.timer.startAt.getTime();
+    this.buttonConfig = BUTTON_CONFIGURATIONS.onGoing;
+    this.time = this.getTimeLapsed();
 
-    this.timerInterval = setInterval(() => {
-      this.time = Date.now() - (this.timer as OnGoingTimer).startAt.getTime();
-    }, 1000);
+    this.timerInterval = setInterval(
+      () => (this.time = this.getTimeLapsed()),
+      1000
+    );
   }
 
   ngOnChanges() {
@@ -73,5 +87,12 @@ export class TimerComponent implements OnChanges, OnDestroy {
 
   ngOnDestroy() {
     clearInterval(this.timerInterval);
+  }
+
+  getTimeLapsed() {
+    return (
+      ((this.timer as Timer).endAt || new Date()).getTime() -
+      (this.timer as Timer).startAt.getTime()
+    );
   }
 }

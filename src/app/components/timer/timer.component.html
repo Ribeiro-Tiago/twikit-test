@@ -1,9 +1,9 @@
 <div>
   <app-button
-    [label]="label"
-    [color]="color"
-    [icon]="icon"
-    [disabled]="isDone"
+    [label]="buttonConfig.label"
+    [color]="buttonConfig.color"
+    [icon]="buttonConfig.icon"
+    [disabled]="buttonConfig.isDone"
     (onClick)="onButtonClick()"
   ></app-button>
 
