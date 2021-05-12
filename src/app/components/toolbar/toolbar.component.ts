@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Timer } from 'src/app/typings';
 import { timers } from 'src/app/store/selectors/timer.selector';
 import { AppState } from 'src/app/typings/store';
-import { resetTimers } from 'src/app/store/actions/timer.action';
+import { resetTimers, sort } from 'src/app/store/actions/timer.action';
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
@@ -20,5 +20,9 @@ export class ToolbarComponent {
 
   onRefresh() {
     this.store.dispatch(resetTimers());
+  }
+
+  sort() {
+    this.store.dispatch(sort());
   }
 }

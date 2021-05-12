@@ -5,7 +5,13 @@
   </header>
 
   <div *ngIf="((timers$ | async) || []).length" class="button-wrapper">
-    <app-button label="Sort" icon="order.svg" color="default"></app-button>
+    <app-button
+      *ngIf="((timers$ | async) || []).length > 1"
+      label="Sort"
+      icon="order.svg"
+      color="default"
+      (onClick)="sort()"
+    ></app-button>
 
     <app-button
       label="Refresh"

@@ -2,11 +2,17 @@ import { createReducer, on } from '@ngrx/store';
 import { OnGoingTimer, TimerState } from 'src/app/typings';
 
 import { TimerStore } from 'src/app/typings/store';
-import { startTimer, stopTimer, resetTimers } from '../actions/timer.action';
+import {
+  startTimer,
+  stopTimer,
+  resetTimers,
+  sort,
+} from '../actions/timer.action';
 
 export const initialState: Readonly<TimerStore> = {
   timers: [],
   currentTimer: null,
+  sortDesc: true,
 };
 
 export const timerReducer = createReducer(
@@ -16,16 +22,44 @@ export const timerReducer = createReducer(
     currentTimer: { state: TimerState.ON_GOING, startAt: new Date() },
   })),
 
-  on(stopTimer, ({ timers, currentTimer }) => {
+  on(stopTimer, ({ timers, currentTimer, sortDesc }) => {
+    console.log(
+      (currentTimer as OnGoingTimer).startAt.getTime(),
+      new Date().getTime()
+    );
+
+    const newTimer = {
+      startAt: (currentTimer as OnGoingTimer).startAt,
+      endAt: new Date(),
+      state: TimerState.DONE,
+    };
+
     return {
-      timers: timers.concat({
-        startAt: (currentTimer as OnGoingTimer).startAt,
-        endAt: new Date(),
-        state: TimerState.DONE,
-      }),
+      timers: sortDesc ? [newTimer, ...timers] : timers.concat(newTimer),
       currentTimer: null,
+      sortDesc,
     };
   }),
 
-  on(resetTimers, () => ({ timers: [], currentTimer: null }))
+  on(resetTimers, ({ sortDesc }) => ({
+    timers: [],
+    currentTimer: null,
+    sortDesc,
+  })),
+
+  on(sort, ({ timers, sortDesc, currentTimer }) => {
+    const sorted = [...timers].sort((a, b) => {
+      if (sortDesc) {
+        [b, a] = [a, b];
+      }
+
+      return a.startAt < b.startAt ? 1 : -1;
+    });
+
+    return {
+      currentTimer,
+      timers: sorted,
+      sortDesc: !sortDesc,
+    };
+  })
 );
