@@ -1,6 +1,6 @@
 @keyframes fadeInDown {
   from {
-    transform: translate3d(0, -70px, 0);
+    transform: translate3d(0, calc(-100% - 20px), 0);
   }
 
   to {

@@ -1,4 +1,10 @@
 @import "../../scss/mixins.scss";
+@import "../../scss/animations.scss";
+
+@mixin btnType($color) {
+  @include bgWithBorder($color);
+  transition: background-color 200ms ease-in-out;
+}
 
 button {
   border-width: 1px;
@@ -14,24 +20,25 @@ button {
   text-transform: uppercase;
   color: #fff;
   cursor: pointer;
+  background-color: #000;
   transition: 0.2ms ease-in-out;
 
   &.button-default {
-    @include bgWithBorder(#666);
+    @include btnType(#666);
   }
 
   &.button-danger {
-    @include bgWithBorder(#c52929);
+    @include btnType(#c52929);
   }
 
   &.button-success {
-    @include bgWithBorder(#20bb1b);
+    @include btnType(#20bb1b);
   }
 
   &:not(.button-disabled) {
     &:hover {
       opacity: 0.8;
-      transition: 0.2ms ease-in-out;
+      transition: 200ms ease-in-out;
     }
   }
 
