@@ -23,11 +23,6 @@ export const timerReducer = createReducer(
   })),
 
   on(stopTimer, ({ timers, currentTimer, sortDesc }) => {
-    console.log(
-      (currentTimer as OnGoingTimer).startAt.getTime(),
-      new Date().getTime()
-    );
-
     const newTimer = {
       startAt: (currentTimer as OnGoingTimer).startAt,
       endAt: new Date(),
