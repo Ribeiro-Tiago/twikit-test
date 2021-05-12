@@ -1,4 +1,4 @@
 @mixin bgWithBorder($hex) {
-  background: rgba($hex, $alpha: 0.7);
+  background-color: rgba($hex, $alpha: 0.7);
   border-color: $hex;
 }

@@ -1,4 +1,8 @@
+@import "../../scss/variables.scss";
+
 section {
+  background: $secondary;
+  position: relative;
   border-bottom: solid 1px #000;
   width: 100%;
 
@@ -14,13 +18,23 @@ section {
   }
 
   .button-wrapper {
+    float: right;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 12px;
 
     app-button:first-child {
       margin-right: 8px;
+    }
+
+    &:before,
+    &:after {
+      clear: both;
     }
   }
 }
