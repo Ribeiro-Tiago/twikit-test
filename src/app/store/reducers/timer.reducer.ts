@@ -12,7 +12,7 @@ import {
 export const initialState: Readonly<TimerStore> = {
   timers: [],
   currentTimer: null,
-  sortDesc: true,
+  sortDesc: false,
 };
 
 export const timerReducer = createReducer(
